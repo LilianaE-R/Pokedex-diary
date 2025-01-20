@@ -6,26 +6,28 @@
         <title>Homepage</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="bg-gray-300">
         <!-- Header -->
-        <header class>
-            <nav class="bg-slate-900 text-white flex justify-between max-w-screen-lg mx-autot">
-                <div class="flex gap-2 items-center">
-                    <img id="logo" src="https://cdn-icons-png.freepik.com/256/16000/16000950.png?semt=ais_hybrid" alt="" class="h-10 w-10" />
+        <header class="bg-black text-white font-bold border-solid border-b-2 border-white drop-shadow-lg">
+            <div class="flex justify-between max-w-screen-lg mx-auto">
+                <div class="flex gap-2 items-center mx-5">
+                    <img id="logo" src="/img/pokedex_icon.png" alt="" class="h-9 w-9 my-1" />
                     <h1 class="text-2xl">PokeDex</h1>
                 </div>
-                <ul class="flex gap-2 text-lg items-center">
-                    <li>Home</li>
-                    <li>Journal</li>
-                </ul>
-            </nav>
+                <nav class="my-auto">
+                    <ul class="flex gap-4 text-lg mx-5">
+                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="./journal.html">Journal</a></li>
+                    </ul>
+                </nav>
+            </div>
         </header>
 
         <!-- Main -->
         <main>
             <search>
                 <form>
-                    <input type="text" id="searchbar" />
+                    <input type="text" id="searchbar" class="mt-4" placeholder="Search by ID or Name..." />
                 </form>
             </search>
 
