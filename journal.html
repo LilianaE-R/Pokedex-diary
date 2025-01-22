@@ -25,7 +25,7 @@
         <main>
             <section id="content-container" class="max-w-screen-lg mx-auto p-2">
                 <div class="flex gap-6">
-                    <div class="bg-white rounded-md">
+                    <div class="bg-white rounded-md p-2 flex flex-col">
                         <button class="bg-gray-600 rounded-lg outline-1 text-white text-md p-2">Save</button>
                         <img src="https://img.pokemondb.net/sprites/x-y/shiny/bulbasaur.png" alt="Bulbasaur" />
                         <div class="flex gap-2">
@@ -34,18 +34,20 @@
                         </div>
                         <p>Types</p>
                     </div>
-                    <div class="bg-white rounded-md flex gap-6">
+                    <div class="bg-white rounded-md flex gap-6 p-2">
                         <div>
-                            <div class="flex gap-2">
+                            <div class="flex gap-2 mb-2">
                                 <p>Height</p>
+                                <p>|</p>
                                 <p>Weight</p>
                             </div>
                             <div>
-                                <h2>Abilities</h2>
-                                <p>Ability 1</p>
-                                <p>Ability 2</p>
+                                <h2 class="text-md">Abilities:</h2>
+                                <p class="text-sm">Ability 1</p>
+                                <p class="text-sm">Ability 2</p>
                             </div>
-                            <div class="flex gap-6">
+                            <div class="flex gap-6 mb-2">
+                                <h2>Stats:</h2>
                                 <div>
                                     <p>Stat 1</p>
                                     <p>Stat 2</p>
@@ -60,8 +62,8 @@
                         </div>
                         <div class="flex flex-col">
                             <h2>Your Notes:</h2>
-                            <textarea class="border" name="notes" id="notes"></textarea>
-                            <button class="bg-blue-600 text-white">Save</button>
+                            <textarea class="border-gray-900 border mt-2" name="notes" id="notes"></textarea>
+                            <button class="bg-blue-600 text-white mt-2">Save</button>
                         </div>
                     </div>
                 </div>
