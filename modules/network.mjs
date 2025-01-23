@@ -6,17 +6,33 @@ export const mainSRC = "https://pokeapi.co/api/v2/pokemon";
 
 export function searchBar() {
   const searchBar = document.getElementById("searchbar");
+  const uniqueNum = new Set();
+
   searchBar.addEventListener("input", () => {
-    const userSearch = searchBar.value;
-    let poke_no;
+    const userSearch = searchBar.value.trim();
+    // Single No Input
     if (!isNaN(userSearch)) {
-      poke_no = parseInt(searchBar.value, 10);
-      fetchDataFromSearchID(poke_no);
-    } else if (userSearch.split(",").every((i) => !isNaN(Number(i)))) {
-      poke_no = userSearch.split(",").map((i) => Number(i.trim()));
-      poke_no.forEach((i) => fetchDataFromSearchID(i));
+      const poke_no = parseInt(userSearch, 10);
+      if (!uniqueNum.has(poke_no)) {
+        uniqueNum.add(poke_no);
+        // Fetch-Single-Start
+        fetchDataFromSearchID(poke_no);
+      }
+      // Multi No Input
+    } else if (userSearch.split(",").every((i) => !isNaN(Number(i.trim())))) {
+      const poke_no = userSearch
+        .split(",")
+        .map((i) => Number(i.trim()))
+        .filter((num) => !isNaN(num));
+      // Fetch-Multi-Start
+      poke_no.forEach((i) => {
+        if (!uniqueNum.has(i)) {
+          uniqueNum.add(i);
+          fetchDataFromSearchID(i);
+        }
+      });
     } else {
-      let poke_name = userSearch;
+      const poke_name = userSearch;
       fetchDataFromSearchName(poke_name);
     }
   });
