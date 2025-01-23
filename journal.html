@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journal</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <img id="logo" src="" alt="">
-            <ul>
-                <li>Home</li>
-                <li>Journal</li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <search>
-            <form>
-              <input type="text" id="searchbar">
-            </form>
-          </search>
-
-        <section id="content-container">
-            <!-- content -->
-        </section>
-
-    </main>
-
-</body>
-<script type="module" src="journal.js"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Journal</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-300">
+        <!-- Header -->
+        <header class="bg-black text-white font-bold border-solid border-b-2 border-white drop-shadow-lg">
+            <div class="flex justify-between max-w-screen-lg mx-auto">
+                <div class="flex gap-2 items-center mx-5">
+                    <img id="logo" src="/img/pokedex_icon.png" alt="" class="h-9 w-9 my-1" />
+                    <h1 class="text-2xl">PokeDex</h1>
+                </div>
+                <nav class="my-auto">
+                    <ul class="flex gap-4 text-lg mx-5">
+                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="./journal.html">Journal</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <section id="content-container" class="max-w-screen-lg mx-auto p-2">
+                <!-- Content -->
+            </section>
+        </main>
+    </body>
+    <script src="journal.js"></script>
 </html>
