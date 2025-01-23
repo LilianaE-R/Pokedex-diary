@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Homepage</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-gray-300">
-        <!-- Header -->
-        <header class="bg-black text-white font-bold border-solid border-b-2 border-white drop-shadow-lg">
-            <div class="flex justify-between max-w-screen-lg mx-auto">
-                <div class="flex gap-2 items-center mx-5">
-                    <img id="logo" src="/img/pokedex_icon.png" alt="" class="h-9 w-9 my-1" />
-                    <h1 class="text-2xl">PokeDex</h1>
-                </div>
-                <nav class="my-auto">
-                    <ul class="flex gap-4 text-lg mx-5">
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./journal.html">Journal</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-300">
+    <!-- Header -->
+    <header
+      class="bg-black text-white font-bold border-solid border-b-2 border-white drop-shadow-lg"
+    >
+      <div class="flex justify-between max-w-screen-lg mx-auto">
+        <div class="flex gap-2 items-center mx-5">
+          <img
+            id="logo"
+            src="/img/pokedex_icon.png"
+            alt=""
+            class="h-9 w-9 my-1"
+          />
+          <h1 class="text-2xl">PokeDex</h1>
+        </div>
+        <nav class="my-auto">
+          <ul class="flex gap-4 text-lg mx-5">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./journal.html">Journal</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-        <!-- Main -->
-        <main>
-            <search class="max-w-screen-lg mx-auto flex justify-center">
-                <form class="m-10">
-                    <input type="text" id="searchbar" class="rounded-lg h-6 w-96" placeholder="Search by ID or Name..." />
-                </form>
-            </search>
+    <!-- Main -->
+    <main>
+      <search class="max-w-screen-lg mx-auto flex justify-center">
+        <form class="m-10">
+          <input
+            type="text"
+            id="searchbar"
+            class="rounded-lg h-6 w-96"
+            placeholder="Search by ID or Name..."
+          />
+        </form>
+      </search>
 
-            <section id="content-container" class="grid grid-cols-6 gap-2 max-w-screen-lg mx-auto">
-                <!-- content -->
-            </section>
-        </main>
-    </body>
-    <script type="module" src="index.js"></script>
+      <section
+        id="content-container"
+        class="grid grid-cols-6 gap-2 max-w-screen-lg mx-auto"
+      >
+        <!-- content -->
+      </section>
+    </main>
+  </body>
+  <script type="module" src="index.js"></script>
 </html>
