@@ -12,6 +12,22 @@ export function storeFavourites(data) {
     name: data.name,
     note: "",
     pic: data.sprites.front_default,
+    height: data.height,
+    weight: data.weight,
+    ability1: data.abilities[0].ability.name,
+    ability2: data.abilities[1].ability.name,
+    stat1Name: data.stats[0].stat.name,
+    stat1Value: data.stats[0].base_stat,
+    stat2Name: data.stats[1].stat.name,
+    stat2Value: data.stats[1].base_stat,
+    stat3Name: data.stats[2].stat.name,
+    stat3Value: data.stats[2].base_stat,
+    stat4Name: data.stats[3].stat.name,
+    stat4Value: data.stats[3].base_stat,
+    stat5Name: data.stats[4].stat.name,
+    stat5Value: data.stats[4].base_stat,
+    stat6Name: data.stats[5].stat.name,
+    stat6Value: data.stats[5].base_stat,
   };
   console.log(data.sprites.front_default);
   // Set item to a stringified version of an array with the old and new tasks
@@ -47,6 +63,5 @@ export function addToNotes(note, pokeID) {
       favouritesLS[i].note = notes;
       localStorage.setItem("Favourites", JSON.stringify(favouritesLS));
     }
-    break;
   }
 }

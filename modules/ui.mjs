@@ -53,21 +53,54 @@ export function createLocalCard(favorites) {
     let card = document.createElement("li");
     let noteField = document.createElement("textarea");
     let saveNoteBtn = document.createElement("button");
-    // let subCard = document.createElement("")
+    let mainCard = document.createElement("div");
+    let subCard = document.createElement("div");
+    let subCard1 = document.createElement("div");
+    let subCard2 = document.createElement("div");
+    let subCardH2 = document.createElement("h2");
 
     //data collector
 
     // style AND data adding
+    subCard.className = "bg-white rounded-md flex gap-6 p-2";
+    subCardH2.textContent = "Your notes:";
+    subCard2.className = "flex flex-col";
+    subCard1.innerHTML = `<div>
+                            <div class="flex gap-2 mb-2">
+                                <p>Height: ${data.height}</p>
+                                <p>|</p>
+                                <p>Weight: ${data.weight}</p>
+                            </div>
+                            <div>
+                                <h2 class="text-md">Abilities:</h2>
+                                <p class="text-sm capitalize">Ability 1: ${data.ability1}</p>
+                                <p class="text-sm capitalize">Ability 2: ${data.ability2}</p>
+                            </div>
+                            <div class="flex gap-6 mb-2">
+                                <h2>Stats:</h2>
+                                <div>
+                                    <p>${data.stat1Name}: ${data.stat1Value}</p>
+                                    <p>${data.stat2Name}: ${data.stat2Value}</p>
+                                    <p>${data.stat3Name}: ${data.stat3Value}</p>
+                                </div>
+                                <div>
+                                    <p>${data.stat4Name}: ${data.stat4Value}</p>
+                                    <p>${data.stat5Name}: ${data.stat5Value}</p>
+                                    <p>${data.stat6Name}: ${data.stat6Value}</p>
+                                </div>
+                            </div>`;
     noteField.id = "note-input";
     noteField.textContent = `${data.note}`;
     noteField.placeholder = `Note for Pokemon ${data.id}`;
+    noteField.className = "border-gray-900 border mt-2";
     saveNoteBtn.id = "add-notes-localstorage";
     saveNoteBtn.textContent = "Save Note";
-    saveNoteBtn.className =
-      "bg-gray-600 rounded-lg outline-1 text-white text-md";
+    saveNoteBtn.className = "bg-blue-600 text-white mt-2";
     saveNoteBtn.addEventListener("click", () => {
       addToNotes(noteField, data.id);
     });
+
+    mainCard.className = "flex gap-3 mb-2";
 
     card.classList.add(
       "bg-white",
@@ -88,9 +121,11 @@ export function createLocalCard(favorites) {
   </div><p class='capitalize'></p>`;
 
     // element-adding
-    card.prepend(saveNoteBtn);
-    card.appendChild(noteField);
-    listContainer.appendChild(card);
+    subCard.append(subCard1, subCard2);
+    subCard2.append(subCardH2, noteField, saveNoteBtn);
+    mainCard.appendChild(card);
+    mainCard.appendChild(subCard);
+    listContainer.appendChild(mainCard);
     // function abilityFetch() {
     //   for (let i = 0; i < data.abilities.length; i++) {
     //     let pokeAbilLi = document.createElement("li");
