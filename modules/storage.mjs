@@ -10,6 +10,7 @@ export function storeFavourites(data) {
   const pokemonListLocal = {
     id: data.id,
     name: data.name,
+    type: data.types[0].type.name,
     note: "",
     pic: data.sprites.front_default,
     height: data.height,

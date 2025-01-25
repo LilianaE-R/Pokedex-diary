@@ -58,6 +58,7 @@ export function createLocalCard(favorites) {
     let subCard1 = document.createElement("div");
     let subCard2 = document.createElement("div");
     let subCardH2 = document.createElement("h2");
+    
 
     //data collector
 
@@ -71,27 +72,32 @@ export function createLocalCard(favorites) {
                                 <p>|</p>
                                 <p>Weight: ${data.weight}</p>
                             </div>
-                            <div>
+                            <div class="mb-2">
                                 <h2 class="text-md">Abilities:</h2>
-                                <p class="text-sm capitalize">Ability 1: ${data.ability1}</p>
-                                <p class="text-sm capitalize">Ability 2: ${data.ability2}</p>
+                                <p class="text-sm capitalize">${data.ability1}</p>
+                                <p class="text-sm capitalize">${data.ability2}</p>
                             </div>
-                            <div class="flex gap-6 mb-2">
-                                <h2>Stats:</h2>
+                            <div class="flex flex-col gap-1 mb-2">
+                            <h2 class="text-md">Stats:</h2>
+                            <div class="flex gap-6">
                                 <div>
-                                    <p>${data.stat1Name}: ${data.stat1Value}</p>
-                                    <p>${data.stat2Name}: ${data.stat2Value}</p>
-                                    <p>${data.stat3Name}: ${data.stat3Value}</p>
-                                </div>
-                                <div>
-                                    <p>${data.stat4Name}: ${data.stat4Value}</p>
-                                    <p>${data.stat5Name}: ${data.stat5Value}</p>
-                                    <p>${data.stat6Name}: ${data.stat6Value}</p>
-                                </div>
+                                    <p class="text-sm capitalize">${data.stat1Name}: ${data.stat1Value}</p>
+                                    <p class="text-sm capitalize">${data.stat2Name}: ${data.stat2Value}</p>
+                                    <p class="text-sm capitalize">${data.stat3Name}: ${data.stat3Value}</p>
+                                    </div>
+                                   
+
+                                    <div>
+                                     <p class="text-sm capitalize">${data.stat4Name}: ${data.stat4Value}</p>
+                                    <p class="text-sm capitalize">${data.stat5Name}: ${data.stat5Value}</p>
+                                    <p class="text-sm capitalize">${data.stat6Name}: ${data.stat6Value}</p>
+                                    </div>
+
+                                    </div>
                             </div>`;
     noteField.id = "note-input";
     noteField.textContent = `${data.note}`;
-    noteField.placeholder = `Note for Pokemon ${data.id}`;
+    noteField.placeholder = `Note for ${data.name}`;
     noteField.className = "border-gray-900 border mt-2";
     saveNoteBtn.id = "add-notes-localstorage";
     saveNoteBtn.textContent = "Save Note";
@@ -99,6 +105,7 @@ export function createLocalCard(favorites) {
     saveNoteBtn.addEventListener("click", () => {
       addToNotes(noteField, data.id);
     });
+  
 
     mainCard.className = "flex gap-3 mb-2";
 
@@ -114,18 +121,21 @@ export function createLocalCard(favorites) {
       "shadow-md"
     );
     card.innerHTML = `
-  <img class='mx-auto' src='${data.pic}'/>
+  <img class='h-36 w-36 mx-auto ' src='${data.pic}'/>
   <div class="flex gap-2">
   <p class='capitalize'>#${data.id}</p>
   <p class='capitalize'>${data.name}</p>
-  </div><p class='capitalize'></p>`;
+  </div><p class='capitalize'>${data.type}</p>`;
 
     // element-adding
     subCard.append(subCard1, subCard2);
     subCard2.append(subCardH2, noteField, saveNoteBtn);
     mainCard.appendChild(card);
     mainCard.appendChild(subCard);
+  
+
     listContainer.appendChild(mainCard);
+   
     // function abilityFetch() {
     //   for (let i = 0; i < data.abilities.length; i++) {
     //     let pokeAbilLi = document.createElement("li");
