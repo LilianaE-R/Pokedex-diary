@@ -3,12 +3,15 @@
 import { createCard } from "./ui.mjs";
 
 export const mainSRC = "https://pokeapi.co/api/v2/pokemon";
+const error = document.getElementById("errorbar");
 
 export function searchBar() {
   const searchBar = document.getElementById("searchbar");
   const uniqueNum = new Set();
+  const listContainer = document.getElementById("content-container");
 
   searchBar.addEventListener("input", () => {
+    listContainer.innerHTML = "";
     const userSearch = searchBar.value.trim();
     // Single No Input
     if (!isNaN(userSearch)) {
@@ -45,68 +48,45 @@ export async function fetchDataFromSearchID(poke_no) {
     if (!res.ok) throw new Error("Something went wrong");
     const data = await res.json();
     console.log(`That worked: Pokemon Number ${poke_no}`, data);
+    errorbar.innerHTML = "";
     createCard(data);
   } catch (e) {
     console.error(e);
     console.error(`Error at index ${poke_no}: `, e);
-    console.error("Pokemon does not exist!");
+    errorbar.innerHTML = "Pokemon does not exist!";
   }
 }
 
 // fetch-cycle for search by ID
 export async function fetchDataFromSearchName(poke_name) {
   try {
-    const res = await fetch(`${mainSRC}/`);
+    const res = await fetch(`${mainSRC}/${poke_name}`);
     if (!res.ok) throw new Error("Something went wrong");
     const data = await res.json();
-    for (let i = 0; i < data.result.length; i++) {
-      if (data.result[i].name == poke_name) {
-        console.log(
-          `That worked: It is Pokemon No: ${i + 1} with the name ${
-            data.result[i].name
-          }`
-        );
-        break;
-      } else {
-        console.log("Not found yet!");
-      }
-    }
-    // console.log(data.result.[i].poke_name);
-    // createCard(data);
+    console.log(
+      `That worked: It is Pokemon No: ${data.id} with the name ${data.name}`
+    );
+    errorbar.innerHTML = "";
+    createCard(data);
   } catch (e) {
     console.error(e);
     console.error(`Error at index ${poke_name}: `, e);
-    console.error("Pokemon does not exist!");
+    errorbar.innerHTML = "Pokemon does not exist!";
   }
 }
 
-// export async function fetchDataIndex() {
-//   while (currentIndex <= maxIndex) {
-//     try {
-//       let i = currentIndex;
-//       currentIndex++;
-//       const res = await fetch(`${mainSRC}/${currentIndex}`);
-//       if (!res.ok) throw new Error("Something went wrong");
-//       const data = await res.json();
-//       console.log(`That worked: Pokemon No ${currentIndex}`, data);
-//       createCard(data);
-//     } catch (e) {
-//       console.error(e);
-//       console.error(`Error at index ${currentIndex}: `, e);
-//     }
-//   }
-// }
-
-// for favorites: reading the LS!
-// export async function fetchDataCart(item) {
-//   try {
-//     const res = await fetch(`${mainSRC}/${item}`);
-//     if (!res.ok) throw new Error("Something went wrong");
-//     const data = await res.json();
-//     console.log(`That worked: Item No ${item}`, data);
-//     createCard(data);
-//   } catch (e) {
-//     console.error(e);
-//     console.error(`Error at index ${item}: `, e);
-//   }
-// }
+export async function fetchDataComplete() {
+  for (let i = 1; i < 150; i++) {
+    try {
+      const res = await fetch(`${mainSRC}/${i}`);
+      if (!res.ok) throw new Error("Something went wrong");
+      const data = await res.json();
+      console.log(`That worked: Pokemon No ${i}`, data);
+      errorbar.innerHTML = "";
+      createCard(data);
+    } catch (e) {
+      console.error(e);
+      console.error(`Error at index ${i}: `, e);
+    }
+  }
+}
