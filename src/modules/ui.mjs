@@ -1,4 +1,5 @@
 // Create Card and UI Functions
+import { fetchDataComplete } from "./network.mjs";
 import { storeFavourites, addToNotes } from "./storage.mjs";
 
 //Create Card Main Page
@@ -58,7 +59,6 @@ export function createLocalCard(favorites) {
     let subCard1 = document.createElement("div");
     let subCard2 = document.createElement("div");
     let subCardH2 = document.createElement("h2");
-    
 
     //data collector
 
@@ -105,7 +105,6 @@ export function createLocalCard(favorites) {
     saveNoteBtn.addEventListener("click", () => {
       addToNotes(noteField, data.id);
     });
-  
 
     mainCard.className = "flex gap-3 mb-2";
 
@@ -132,10 +131,9 @@ export function createLocalCard(favorites) {
     subCard2.append(subCardH2, noteField, saveNoteBtn);
     mainCard.appendChild(card);
     mainCard.appendChild(subCard);
-  
 
     listContainer.appendChild(mainCard);
-   
+
     // function abilityFetch() {
     //   for (let i = 0; i < data.abilities.length; i++) {
     //     let pokeAbilLi = document.createElement("li");
