@@ -92,30 +92,3 @@ export async function fetchDataComplete() {
     createCard(pokemon);
   });
 }
-
-// export async function fetchDataComplete() {
-//   const length = 150;
-//   try {
-//     const res = await Promise.all(
-//       Array.from({ length }, (_, i) =>
-//         fetch(`${mainSRC}/${i + 1}`)
-//           .then((res) => {
-//             if (!res.ok) throw new Error(`Failed to fetch ${i + 1}`);
-//             return res.json();
-//           })
-//           .then((data) => {
-//             console.log(`That worked: Pokemon No ${i + 1}`, data);
-//             errorbar.innerHTML = "";
-//             createCard(data);
-//             return data;
-//           })
-//           .catch((e) => {
-//             console.error(`Error at index ${i + 1}:`, e);
-//             return null;
-//           })
-//       )
-//     );
-//   } catch (e) {
-//     console.error("Something went wrong:", e);
-//   }
-// }
