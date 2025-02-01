@@ -76,17 +76,19 @@ export async function fetchDataFromSearchName(poke_name) {
 }
 
 export async function fetchDataComplete() {
-  for (let i = 1; i < 150; i++) {
-    try {
-      const res = await fetch(`${mainSRC}/${i}`);
-      if (!res.ok) throw new Error("Something went wrong");
-      const data = await res.json();
-      console.log(`That worked: Pokemon No ${i}`, data);
-      errorbar.innerHTML = "";
-      createCard(data);
-    } catch (e) {
-      console.error(e);
-      console.error(`Error at index ${i}: `, e);
-    }
-  }
+  const length = 1000;
+
+  const res = await Promise.all(
+    Array.from({ length }, (_, i) =>
+      fetch(`${mainSRC}/${i + 1}`)
+        .then((res) => (res.ok ? res.json() : null))
+        .catch(() => null)
+    )
+  );
+
+  const dataArray = res.filter(Boolean);
+  console.log(dataArray);
+  dataArray.forEach((pokemon) => {
+    createCard(pokemon);
+  });
 }
