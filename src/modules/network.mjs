@@ -73,7 +73,7 @@ export async function fetchDataFromSearchName(poke_name) {
 }
 
 export async function fetchDataComplete() {
-    const length = 120;
+    const length = 1000;
 
     const res = await Promise.all(
         Array.from({ length }, (_, i) =>

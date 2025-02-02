@@ -1,5 +1,5 @@
 // Local Storage Functions
-import { createLocalCard } from "./ui.mjs";
+import { createLocalCard, removeStorageBtn, createStorageBtn } from "./ui.mjs";
 
 //FAVOURITES to LS
 export function storeFavourites(data) {
@@ -15,7 +15,7 @@ export function storeFavourites(data) {
         height: data.height,
         weight: data.weight,
         ability1: data.abilities[0].ability.name,
-        // ability2: data.abilities[1].ability.name,
+        ability2: data.abilities[1].ability.name,
         stat1Name: data.stats[0].stat.name,
         stat1Value: data.stats[0].base_stat,
         stat2Name: data.stats[1].stat.name,
@@ -31,20 +31,12 @@ export function storeFavourites(data) {
     };
     // Set item to a stringified version of an array with the old and new tasks
     localStorage.setItem("Favourites", JSON.stringify([...previousData, pokemonListLocal]));
-    // Change Favorite Button
-    const e = document.getElementById(data.id);
-    const parent = e.parentElement;
-    e.remove();
-    const rmBtn = document.createElement("button");
-    rmBtn.className = "bg-red-500 p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 hover:bg-rose-500";
-    rmBtn.textContent = "Remove to Favorites";
-    rmBtn.id = data.id;
-    rmBtn.addEventListener("click", () => removeFavorites(data));
-    parent.prepend(rmBtn);
+    const parentElement = removeStorageBtn(data.id);
+    createStorageBtn(data, parentElement, "Remove");
 }
 
-export function removeFavorites(data) {
-    // Get previous data OR an empty array
+// Remove stored Pokemon
+export function removeFavorite(data) {
     const storage = JSON.parse(localStorage.getItem("Favourites")) || [];
     for (let i = 0; i < storage.length; i++) {
         if (storage[i].id === data.id) {
@@ -52,16 +44,20 @@ export function removeFavorites(data) {
             localStorage.setItem("Favourites", JSON.stringify(storage));
         }
     }
-    // Change Button
-    const e = document.getElementById(data.id);
-    const parent = e.parentElement;
-    e.remove();
-    const saveBtn = document.createElement("button");
-    saveBtn.className = "bg-blue-500 p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 hover:bg-indigo-500";
-    saveBtn.textContent = "Add to Favorites";
-    saveBtn.id = data.id;
-    saveBtn.addEventListener("click", () => storeFavourites(data));
-    parent.prepend(saveBtn);
+    const parentElement = removeStorageBtn(data.id);
+    createStorageBtn(data, parentElement, "Add to Favorites");
+}
+
+// Check if Pokemon in storage
+export function checkStorage(id) {
+    const storage = JSON.parse(localStorage.getItem("Favourites")) || [];
+    for (let i = 0; i < storage.length; i++) {
+        if (storage[i].id === id) {
+            return true;
+        } else {
+        }
+    }
+    return false;
 }
 
 // Pull Favorites from Local Storage

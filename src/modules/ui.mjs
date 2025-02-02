@@ -1,32 +1,26 @@
 // Create Card and UI Functions
-import { storeFavourites, addToNotes } from "./storage.mjs";
+import { storeFavourites, removeFavorite, addToNotes, checkStorage } from "./storage.mjs";
 
-//Create Card Main Page
+// Create Card Main Page
 export function createCard(data) {
-    // element-pointer for container and style
+    // Container
     const listContainer = document.getElementById("content-container");
 
-    // element-creator
-    let card = document.createElement("li");
-    let saveBtn = document.createElement("button");
-
-    // style AND data adding
+    // Card
+    const card = document.createElement("li");
     card.classList.add("bg-white", "list-none", "my-2", "p-2", "flex", "flex-col", "rounded-md", "border", "shadow-md");
-    saveBtn.className = "bg-blue-500 p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 hover:bg-indigo-500";
-    saveBtn.textContent = "Add to Favorites";
-    saveBtn.id = data.id;
     card.innerHTML = `
-  <img class='mx-auto' src='${data.sprites.front_default}'/>
-  <div class="flex gap-2">
-  <p class='capitalize'>#${data.id}</p>
-  <p class='capitalize'>${data.name}</p>
-  </div><p class='capitalize'>${data.types[0].type.name}</p>`;
+    <img class='mx-auto' src='${data.sprites.front_default}'/>
+    <div class="flex gap-2">
+    <p class='capitalize'>#${data.id}</p>
+    <p class='capitalize'>${data.name}</p>
+    </div><p class='capitalize'>${data.types[0].type.name}</p>`;
 
-    saveBtn.addEventListener("click", () => storeFavourites(data));
-
-    // element-adding
-    card.prepend(saveBtn);
+    // Append
     listContainer.appendChild(card);
+
+    // Check Storage Button
+    checkStorage(data.id) ? createStorageBtn(data, card, "Remove") : createStorageBtn(data, card, "Add to Favorites");
 }
 
 // Card for Journal HERREEE
@@ -45,8 +39,6 @@ export function createLocalCard(favorites) {
         let subCard1 = document.createElement("div");
         let subCard2 = document.createElement("div");
         let subCardH2 = document.createElement("h2");
-
-        //data collector
 
         // style AND data adding
         subCard.className = "bg-white rounded-md flex gap-6 p-2";
@@ -110,4 +102,33 @@ export function createLocalCard(favorites) {
 
         listContainer.appendChild(mainCard);
     });
+}
+
+// Create Save/Remove Button
+export function createStorageBtn(data, parentElement, content) {
+    // Create Button
+    const btn = document.createElement("button");
+    btn.id = data.id;
+    btn.textContent = content;
+    btn.className = "p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105";
+
+    // Save/Remove specific additions
+    if (content === "Remove") {
+        btn.classList.add("bg-red-500", "hover:bg-rose-500");
+        btn.addEventListener("click", () => removeFavorite(data));
+    } else {
+        btn.classList.add("bg-blue-500", "hover:bg-indigo-500");
+        btn.addEventListener("click", () => storeFavourites(data));
+    }
+
+    // Prepend
+    parentElement.prepend(btn);
+}
+
+// Clear Save/Remove Button
+export function removeStorageBtn(id) {
+    const currentBtn = document.getElementById(id);
+    const parentElement = currentBtn.parentElement;
+    currentBtn.remove();
+    return parentElement;
 }
