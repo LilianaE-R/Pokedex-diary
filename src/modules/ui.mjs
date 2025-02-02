@@ -1,5 +1,4 @@
 // Create Card and UI Functions
-import { fetchDataComplete } from "./network.mjs";
 import { storeFavourites, addToNotes } from "./storage.mjs";
 
 //Create Card Main Page
@@ -23,7 +22,7 @@ export function createCard(data) {
   <p class='capitalize'>${data.name}</p>
   </div><p class='capitalize'>${data.types[0].type.name}</p>`;
 
-    saveBtn.addEventListener("click", (e) => storeFavourites(e, data));
+    saveBtn.addEventListener("click", () => storeFavourites(data));
 
     // element-adding
     card.prepend(saveBtn);

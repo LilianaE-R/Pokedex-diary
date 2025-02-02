@@ -1,5 +1,4 @@
 // Fetch Functions for API
-
 import { createCard } from "./ui.mjs";
 
 export const mainSRC = "https://pokeapi.co/api/v2/pokemon";
@@ -74,7 +73,7 @@ export async function fetchDataFromSearchName(poke_name) {
 }
 
 export async function fetchDataComplete() {
-    const length = 1000;
+    const length = 120;
 
     const res = await Promise.all(
         Array.from({ length }, (_, i) =>
