@@ -8,32 +8,30 @@
     </head>
     <body class="bg-gray-300">
         <!-- Header -->
-        <header class="bg-black text-white font-bold border-solid border-b-2 border-white drop-shadow-lg">
+        <header class="fixed top-0 w-full bg-black text-white font-bold border-solid border-b-2 border-white drop-shadow-lg">
             <div class="flex justify-between max-w-screen-lg mx-auto">
                 <div class="flex gap-2 items-center mx-5">
                     <img id="logo" src="./src/img/pokedex_icon.png" alt="" class="h-9 w-9 my-1" />
                     <h1 class="text-2xl">PokeDex</h1>
                 </div>
                 <nav class="my-auto">
-                    <ul class="flex gap-4 text-lg mx-5">
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./src/journal.html">Journal</a></li>
+                    <ul class="flex gap-4 text-2xl mx-5">
+                        <li><a class="text-yellow-500" href="./index.html">Home</a></li>
+                        <li><a class="hover:text-yellow-500" href="./src/journal.html">Journal</a></li>
                     </ul>
                 </nav>
             </div>
         </header>
-
         <!-- Main -->
-        <main>
+        <main class="mt-24">
             <search class="max-w-screen-lg mx-auto flex justify-center">
                 <form class="m-10">
-                    <input type="text" id="searchbar" class="rounded-lg h-6 w-96" placeholder="Search by ID or Name..." />
+                    <input type="text" id="searchbar" class="rounded-md h-12 w-96 px-2 text-lg border border-gray-400" placeholder="Search by ID or Name..." />
                     <div id="errorbar"></div>
                 </form>
             </search>
-
-            <section id="content-container" class="grid grid-cols-6 gap-2 max-w-screen-lg mx-auto">
-                <!-- content -->
+            <section id="content-container" class="bg-slate-400 rounded-lg mb-4 py-2 px-4 grid grid-cols-5 gap-6 max-w-screen-lg mx-auto">
+                <!-- Content -->
             </section>
         </main>
     </body>
