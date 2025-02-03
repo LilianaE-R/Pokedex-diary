@@ -2,7 +2,7 @@
 
 import { createCard } from "./ui.mjs";
 
-export const mainSRC = "https://pokeapi.co/api/v2/pokemon";
+const mainSRC = "https://pokeapi.co/api/v2/pokemon";
 const error = document.getElementById("errorbar");
 const searchBar = document.getElementById("searchbar");
 const listContainer = document.getElementById("content-container");
