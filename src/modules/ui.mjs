@@ -79,9 +79,41 @@ export function createLocalCard(favorites) {
         noteField.className = "border-gray-900 border mt-2";
         saveNoteBtn.id = "add-notes-localstorage";
         saveNoteBtn.textContent = "Save Note";
-        saveNoteBtn.className = "bg-blue-600 text-white mt-2";
+        saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
+
+        //function for save button + storage
         saveNoteBtn.addEventListener("click", () => {
-            addToNotes(noteField, data.id);
+            const notes = noteField.value.trim();
+            if (notes == "") {
+                noteField.focus();
+                noteField.required = true;
+                alert("You cannot submit an empty note");
+            } else {
+                addNotesToStorage(notes, data.id);
+                saveNoteBtn.textContent = "Your note is saved!";
+                saveNoteBtn.className = "bg-green-600 text-white mt-2 ";
+            }
+        });
+
+        //function for edit button + storage
+        editNoteBtn.textContent = 'Edit';
+        editNoteBtn.className = 'text-orange-500 ml-2 flex-none';
+        editNoteBtn.addEventListener('click', () => {
+            const newNote = prompt('Edit your Note', noteField.textContent);
+            if (newNote !== null) {
+                noteField.textContent = newNote.trim();
+                addNotesToStorage(newNote, data.id);
+            } else {
+                alert(console.error());
+            }
+        });
+
+        //function for delete button + storage
+        deleteNoteBtn.textContent = "Delete";
+        deleteNoteBtn.className = 'text-red-500 ml-2 flex-none';
+        deleteNoteBtn.addEventListener('click', () => {
+            noteField.textContent = "";
+            addNotesToStorage(noteField, data.id);
         });
 
         mainCard.className = "flex gap-3 mb-2";
@@ -96,7 +128,7 @@ export function createLocalCard(favorites) {
 
         // element-adding
         subCard.append(subCard1, subCard2);
-        subCard2.append(subCardH2, noteField, saveNoteBtn);
+        subCard2.append(subCardH2, noteField, saveNoteBtn, editNoteBtn, deleteNoteBtn);
         mainCard.appendChild(card);
         mainCard.appendChild(subCard);
 
