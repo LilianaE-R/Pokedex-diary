@@ -6,50 +6,53 @@ const error = document.getElementById("errorbar");
 const searchBar = document.getElementById("searchbar");
 const listContainer = document.getElementById("content-container");
 
-export const search = function search(e) {
-  let search = searchBar.value;
-
-  if (!search) {
-    searchBar.placeholder = "Please insert a Poke-ID or Poke-Name.";
-    fetchData.complete();
-  } else if (!isNaN(search)) {
-    fetchData.searchById(search);
+export function search(search) {
+  if (!isNaN(search) && search.trim() !== "") {
+    searchById(search.trim());
   } else if (search.includes(",")) {
     let ids = search
       .split(",")
-      .map((no) => no.trim())
-      .filter((no) => !isNaN(no));
-    ids.forEach((id) => fetchData.searchById(id));
+      .map((id) => id.trim())
+      .filter((id) => !isNaN(id));
+    ids.forEach((id) => searchById(id));
   } else {
     console.log("Insert a value");
   }
-};
+}
 
-function searchById(searchID) {
+function searchById(searchID, dataArray) {
   dataArray.find((pokemon) =>
-    pokemon.id == searchID ? createCard(id) : (error.textContent = "Insert sth")
+    pokemon.id == searchID
+      ? createCard(searchID)
+      : (error.textContent = "Insert sth")
   );
 }
 
-export async function fetchData() {
-  fetch(mainSRC)
-    .then((res) => res.json())
-    .then((data) => {
-      const length = data.count;
-      exportData(length);
-    })
-    .catch(console.error);
+export function pokemonFetch(dataArray) {
+  dataArray.forEach((pokemon) => createCard(pokemon));
+}
 
-  const res = await Promise.all(
-    Array.from({ length }, (_, i) =>
-      fetch(`${mainSRC}/${i + 1}`)
-        .then((res) => (res.ok ? res.json() : null))
-        .catch(() => null)
-    )
-  );
+export async function fetchDataComplete() {
+  try {
+    // First catching the true pokemon count (beta!)
+    const firstFetch = await fetch(mainSRC);
+    const dataLength = await firstFetch.json();
+    const length = dataLength.count - 279;
 
-  const dataArray = res.filter(Boolean);
-  dataArray.forEach((pokemon) => {
-    createCard(pokemon);
-  });
+    const len = 10;
+    // Start to use of real "length"
+    const res = await Promise.all(
+      Array.from({ length }, (_, i) =>
+        fetch(`${mainSRC}/${i + 1}`)
+          .then((res) => (res.ok ? res.json() : null))
+          .catch(() => null)
+      )
+    );
+
+    const dataArray = res.filter(Boolean);
+    console.log(dataArray);
+    return dataArray;
+  } catch (error) {
+    console.error(error);
+  }
 }
