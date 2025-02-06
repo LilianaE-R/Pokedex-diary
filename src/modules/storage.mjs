@@ -68,10 +68,9 @@ export function pullFavourites() {
 }
 
 // NOTES adding
-export function addToNotes(note, pokeID) {
+export function addNotesToStorage(note, pokeID) {
     const favouritesLS = JSON.parse(localStorage.getItem("Favourites")) || [];
     for (let i = 0; i < favouritesLS.length; i++) {
-        console.log(favouritesLS[i]);
         if (favouritesLS[i].id == pokeID) {
             favouritesLS[i].note = note;
             localStorage.setItem("Favourites", JSON.stringify(favouritesLS));

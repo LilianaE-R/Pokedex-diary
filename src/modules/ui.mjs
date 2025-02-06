@@ -1,5 +1,5 @@
 // Create Card and UI Functions
-import { storeFavourites, removeFavorite, addToNotes, checkStorage } from "./storage.mjs";
+import { storeFavourites, removeFavorite, addNotesToStorage, checkStorage } from "./storage.mjs";
 
 // Create Card Main Page
 export function createCard(data) {
@@ -38,11 +38,14 @@ export function createLocalCard(favorites) {
         let subCard = document.createElement("div");
         let subCard1 = document.createElement("div");
         let subCard2 = document.createElement("div");
+        let subCard3 = document.createElement("div");
         let subCardH2 = document.createElement("h2");
+        let editNoteBtn = document.createElement("button");
+        let deleteNoteBtn = document.createElement("button");
 
         // style AND data adding
         subCard.className = "bg-white rounded-md flex gap-6 p-2";
-        subCardH2.textContent = "Your notes:";
+        subCardH2.textContent = "Type below your note:";
         subCard2.className = "flex flex-col";
         subCard1.innerHTML = `<div>
                             <div class="flex gap-2 mb-2">
@@ -76,10 +79,12 @@ export function createLocalCard(favorites) {
         noteField.id = "note-input";
         noteField.textContent = `${data.note}`;
         noteField.placeholder = `Note for ${data.name}`;
-        noteField.className = "border-gray-900 border mt-2";
+        noteField.className = "border-gray-900 border mt-2 normal-case";
         saveNoteBtn.id = "add-notes-localstorage";
         saveNoteBtn.textContent = "Save Note";
         saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
+        subCard3.className = "flex justify-between"
+
 
         //function for save button + storage
         saveNoteBtn.addEventListener("click", () => {
@@ -93,16 +98,19 @@ export function createLocalCard(favorites) {
                 saveNoteBtn.textContent = "Your note is saved!";
                 saveNoteBtn.className = "bg-green-600 text-white mt-2 ";
             }
-        });
+        }
+    );
 
         //function for edit button + storage
         editNoteBtn.textContent = 'Edit';
-        editNoteBtn.className = 'text-orange-500 ml-2 flex-none';
+        editNoteBtn.className = 'text-orange-500 ml-2 pl-2';
         editNoteBtn.addEventListener('click', () => {
-            const newNote = prompt('Edit your Note', noteField.textContent);
+            const newNote = prompt('Edit your Note', noteField.value);
             if (newNote !== null) {
-                noteField.textContent = newNote.trim();
+                noteField.value = newNote.trim();
                 addNotesToStorage(newNote, data.id);
+                saveNoteBtn.textContent = "Save Note";
+                saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
             } else {
                 alert(console.error());
             }
@@ -110,9 +118,9 @@ export function createLocalCard(favorites) {
 
         //function for delete button + storage
         deleteNoteBtn.textContent = "Delete";
-        deleteNoteBtn.className = 'text-red-500 ml-2 flex-none';
+        deleteNoteBtn.className = 'text-red-500 ml-2 right-0 pr-4';
         deleteNoteBtn.addEventListener('click', () => {
-            noteField.textContent = "";
+            noteField.value = '';
             addNotesToStorage(noteField, data.id);
         });
 
@@ -128,7 +136,8 @@ export function createLocalCard(favorites) {
 
         // element-adding
         subCard.append(subCard1, subCard2);
-        subCard2.append(subCardH2, noteField, saveNoteBtn, editNoteBtn, deleteNoteBtn);
+        subCard2.append(subCardH2, noteField, saveNoteBtn, subCard3);
+        subCard3.append(editNoteBtn, deleteNoteBtn)
         mainCard.appendChild(card);
         mainCard.appendChild(subCard);
 
