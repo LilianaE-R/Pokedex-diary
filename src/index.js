@@ -2,13 +2,12 @@
 
 import { search, fetchDataComplete, pokemonFetch } from "./modules/network.mjs";
 
-// Executing functions:
-const searchBar = document.getElementById("searchbar");
+// Defining variables if necessary and executing functions:
+
 const listContainer = document.getElementById("content-container");
 
-// fetchDataComplete().then((data) => {});
-
 async function main() {
+  const searchBar = document.getElementById("searchbar");
   const dataArray = await fetchDataComplete();
   pokemonFetch(dataArray);
   searchBar.addEventListener("input", (e) => search(e.target.value, dataArray));
