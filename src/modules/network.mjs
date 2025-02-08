@@ -17,7 +17,7 @@ export async function search(value, dataArray) {
     error.innerHTML = "";
     listContainer.innerHTML = "";
     uniquePokemon.clear();
-    pokemonFetch();
+    pokemonFetch(dataArray);
     return;
   }
 
@@ -29,22 +29,6 @@ export async function search(value, dataArray) {
       matchByID(poke_no, dataArray);
       return;
     }
-  }
-
-  // Multiple IDs -> Multiple IDs passed to fetchDataFromSearchID
-  else if (userSearch.split(",").every((i) => !isNaN(Number(i.trim())))) {
-    const poke_no_list = userSearch
-      .split(",")
-      .map((i) => Number(i.trim()))
-      .filter((num) => !isNaN(num));
-
-    poke_no_list.forEach((poke_no) => {
-      if (!uniquePokemon.has(poke_no)) {
-        uniquePokemon.add(poke_no);
-        matchByID(poke_no, dataArray);
-        return;
-      }
-    });
   }
 
   // Name Search -> "matchByName"
@@ -73,33 +57,19 @@ export async function matchByID(poke_no, data) {
   });
 }
 
-// Search Pokémon and match by name; used for search!
-// function matchByName(query, data) {
-//   return data.results.filter((pokemon) => pokemon.name.includes(query));
-// }
-
 // Fetch and display unique Pokémon cards; used for search!
 async function displayMatchingPokemonCards(pokemonList, uniquePokemon) {
   listContainer.innerHTML = ""; // Clear previous results
-  if (pokemonList.length > 1) {
-    for (const pokemon of pokemonList) {
-      if (uniquePokemon.has(pokemon.id)) {
-        createCard(pokemon);
-      } else {
-        // Prevent duplicates
-        uniquePokemon.add(pokemon.id);
-        createCard(pokemon);
-      }
-    }
+  console.log(pokemonList);
+  console.log(uniquePokemon);
 
-    if (pokemonList.length === 1) {
-      if (uniquePokemon.has(pokemonList.id)) {
-        createCard(pokemonList);
-      } else {
-        // Prevent duplicates
-        uniquePokemon.add(pokemonList.id);
-        createCard(pokemonList);
-      }
+  // Prevent duplicates
+  for (const pokemon of pokemonList) {
+    if (uniquePokemon.has(pokemon.id)) {
+      createCard(pokemon);
+    } else {
+      uniquePokemon.add(pokemon.id);
+      createCard(pokemon);
     }
   }
 }
