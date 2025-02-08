@@ -1,16 +1,16 @@
 // Importing all necessary functions:
-import { searchBar, fetchDataComplete } from "./modules/network.mjs";
 
-// Executing functions:
-const search = document.getElementById("searchbar");
+import { search, fetchDataComplete, pokemonFetch } from "./modules/network.mjs";
+
+// Defining variables if necessary and executing functions:
+
 const listContainer = document.getElementById("content-container");
-websiteStart();
 
-function websiteStart() {
-    searchBar();
-    if (search.value) {
-        listContainer.innerHTML = "";
-    } else {
-        fetchDataComplete();
-    }
+async function main() {
+  const searchBar = document.getElementById("searchbar");
+  const dataArray = await fetchDataComplete();
+  pokemonFetch(dataArray);
+  searchBar.addEventListener("input", (e) => search(e.target.value, dataArray));
 }
+
+main();
