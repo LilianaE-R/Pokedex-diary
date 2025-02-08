@@ -68,20 +68,11 @@ export function pullFavourites() {
 }
 
 // NOTES adding
-export function addToNotes(note, pokeID) {
-    const notes = note.value.trim();
-
-    if (notes) {
-        note.focus();
-    } else {
-        console.error("You cannot submit an empty note");
-    }
-
+export function addNotesToStorage(note, pokeID) {
     const favouritesLS = JSON.parse(localStorage.getItem("Favourites")) || [];
     for (let i = 0; i < favouritesLS.length; i++) {
-        console.log(favouritesLS[i]);
         if (favouritesLS[i].id == pokeID) {
-            favouritesLS[i].note = notes;
+            favouritesLS[i].note = note;
             localStorage.setItem("Favourites", JSON.stringify(favouritesLS));
         }
     }
