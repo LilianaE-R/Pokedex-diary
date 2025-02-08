@@ -67,15 +67,15 @@ export function createFavoriteCard(favorites) {
     favorites.forEach((data) => {
         // Card Container
         const card = document.createElement("div");
-        card.classList = "flex gap-4 mb-4";
+        card.classList = "flex gap-4 mb-4 w-full justify-center";
 
         // Left Card
         const leftCard = document.createElement("div");
-        leftCard.classList = "bg-white list-none p-2 flex flex-col rounded-md border shadow-md";
+        leftCard.classList = "bg-white list-none w-56 p-2 flex flex-col rounded-md border shadow-md";
 
         // Img
         const img = document.createElement("img");
-        img.classList = "h-32 w-32 mx-auto my-2";
+        img.classList = "h-30 w-30 mx-auto my-2";
         img.src = data.pic;
 
         // ID/Name Container
@@ -110,7 +110,7 @@ export function createFavoriteCard(favorites) {
 
         // Right Card
         const rightCard = document.createElement("div");
-        rightCard.classList = "bg-white list-none p-3 flex gap-2 rounded-md border shadow-md";
+        rightCard.classList = "bg-white list-none p-3 flex gap-24 rounded-md border shadow-md";
 
         // Right Card - Left Side
         const rightCardLeft = document.createElement("div");
@@ -122,16 +122,16 @@ export function createFavoriteCard(favorites) {
         // Weight
         const weight = document.createElement("p");
         weight.classList = "text-xl";
-        weight.textContent = `Weight: ${data.weight / 10} kg | `;
+        weight.textContent = `Weight: ${data.weight / 10}kg | `;
 
         // Height
         const height = document.createElement("p");
         height.classList = "text-xl";
-        height.textContent = `Height: ${data.height / 10} m`;
+        height.textContent = `Height: ${data.height / 10}m`;
 
         // Ability Container
         const abDiv = document.createElement("div");
-        abDiv.classList = "flex flex-col mt-2";
+        abDiv.classList = "flex flex-col mt-8";
 
         // Ability Header
         const abH2 = document.createElement("h2");
@@ -140,26 +140,26 @@ export function createFavoriteCard(favorites) {
 
         // Ability 1
         const ab1 = document.createElement("p");
-        ab1.classList = "text-md";
+        ab1.classList = "text-lg";
         ab1.textContent = data.ability1;
 
         // Ability 2
         const ab2 = document.createElement("p");
-        ab2.classList = "text-md";
+        ab2.classList = "text-lg";
         ab2.textContent = data.ability2;
 
         // Stats Container
         const statDiv = document.createElement("div");
-        statDiv.classList = "flex flex-col mt-2";
+        statDiv.classList = "flex flex-col mt-8";
 
-        // Ability Header
+        // Stat Header
         const statH2 = document.createElement("h2");
         statH2.classList = "text-xl font-bold";
         statH2.textContent = "Stats";
 
         // Main Stat Container
         const mainStatDiv = document.createElement("div");
-        mainStatDiv.classList = "flex gap-6";
+        mainStatDiv.classList = "flex gap-12";
 
         // Stat Left
         const statLeftDiv = document.createElement("div");
@@ -169,37 +169,37 @@ export function createFavoriteCard(favorites) {
 
         // Stat 1
         const stat1 = document.createElement("p");
-        stat1.classList = "text-sm capitalize";
+        stat1.classList = "text-md capitalize";
         stat1.textContent = `${data.stat1Name}: ${data.stat1Value}`;
 
         // Stat 2
         const stat2 = document.createElement("p");
-        stat2.classList = "text-sm capitalize";
+        stat2.classList = "text-md capitalize";
         stat2.textContent = `${data.stat2Name}: ${data.stat2Value}`;
 
         // Stat 3
         const stat3 = document.createElement("p");
-        stat3.classList = "text-sm capitalize";
+        stat3.classList = "text-md capitalize";
         stat3.textContent = `${data.stat3Name}: ${data.stat3Value}`;
 
         // Stat 4
         const stat4 = document.createElement("p");
-        stat4.classList = "text-sm capitalize";
+        stat4.classList = "text-md capitalize";
         stat4.textContent = `${data.stat4Name}: ${data.stat4Value}`;
 
         // Stat 5
         const stat5 = document.createElement("p");
-        stat5.classList = "text-sm capitalize";
+        stat5.classList = "text-md capitalize";
         stat5.textContent = `${data.stat5Name}: ${data.stat5Value}`;
 
         // Stat 6
         const stat6 = document.createElement("p");
-        stat6.classList = "text-sm capitalize";
+        stat6.classList = "text-md capitalize";
         stat6.textContent = `${data.stat6Name}: ${data.stat6Value}`;
 
         // Right Card - Right Side
         const rightCardRight = document.createElement("div");
-        rightCardRight.classList = "flex flex-col";
+        rightCardRight.classList = "flex flex-col justify-center";
 
         // Note Header
         const noteH2 = document.createElement("h2");
@@ -208,13 +208,13 @@ export function createFavoriteCard(favorites) {
 
         // Note Field
         const noteField = document.createElement("textarea");
-        noteField.className = "border-gray-900 border mt-2 normal-case";
+        noteField.className = "border-gray-400 border mt-2 normal-case rounded-md h-24 w-56 text-lg p-1";
         noteField.textContent = `${data.note === undefined ? "" : data.note}`;
-        noteField.placeholder = `Note for ${data.name}`;
+        noteField.placeholder = `Note for ${data.name[0].toUpperCase() + data.name.slice(1)}`;
 
         // Save Button
         const saveNoteBtn = document.createElement("button");
-        saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
+        saveNoteBtn.className = "p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 bg-blue-500 hover:bg-indigo-500 my-3";
         saveNoteBtn.textContent = "Save Note";
         saveNoteBtn.addEventListener("click", () => {
             const notes = noteField.value.trim();
@@ -225,7 +225,7 @@ export function createFavoriteCard(favorites) {
             } else {
                 addNotesToStorage(notes, data.id);
                 saveNoteBtn.textContent = "Your note is saved!";
-                saveNoteBtn.className = "bg-green-600 text-white mt-2 ";
+                saveNoteBtn.className = "p-1 rounded-lg outline-1 text-white text-md bg-green-500 my-3";
             }
         });
 
@@ -236,14 +236,14 @@ export function createFavoriteCard(favorites) {
         // Edit Button
         const editNoteBtn = document.createElement("button");
         editNoteBtn.textContent = "Edit";
-        editNoteBtn.className = "text-orange-500 ml-2 pl-2";
+        editNoteBtn.className = "py-1 px-8 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 bg-orange-500 hover:bg-yellow-500";
         editNoteBtn.addEventListener("click", () => {
             const newNote = prompt("Edit your Note", noteField.value);
             if (newNote !== null) {
                 noteField.value = newNote.trim();
                 addNotesToStorage(newNote, data.id);
                 saveNoteBtn.textContent = "Save Note";
-                saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
+                saveNoteBtn.className = "p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 bg-blue-500 hover:bg-indigo-500 my-3";
             } else {
                 alert(console.error());
             }
@@ -252,7 +252,7 @@ export function createFavoriteCard(favorites) {
         // Delete Button
         const deleteNoteBtn = document.createElement("button");
         deleteNoteBtn.textContent = "Delete";
-        deleteNoteBtn.className = "text-red-500 ml-2 right-0 pr-4";
+        deleteNoteBtn.className = "py-1 px-8 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105 bg-red-500 hover:bg-rose-500";
         deleteNoteBtn.addEventListener("click", () => {
             noteField.value = "";
             addNotesToStorage(noteField, data.id);
@@ -265,7 +265,11 @@ export function createFavoriteCard(favorites) {
         // Left Card
         leftCard.append(div1, img, div2);
         div1.append(id, pokemonName);
-        div2.append(type1, type2);
+        if (type1.textContent === type2.textContent) {
+            div2.append(type1);
+        } else {
+            div2.append(type1, type2);
+        }
 
         // Right Card
         rightCard.append(rightCardLeft, rightCardRight);
