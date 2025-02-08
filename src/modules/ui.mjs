@@ -67,7 +67,7 @@ export function createFavoriteCard(favorites) {
     favorites.forEach((data) => {
         // Card Container
         const card = document.createElement("div");
-        card.classList = "flex gap-4 mb-4 w-full justify-center";
+        card.classList = "flex gap-6 mb-6";
 
         // Left Card
         const leftCard = document.createElement("div");
@@ -114,19 +114,20 @@ export function createFavoriteCard(favorites) {
 
         // Right Card - Left Side
         const rightCardLeft = document.createElement("div");
+        rightCardLeft.classList = "p-2";
 
         // Weight/Height Container
         const whDiv = document.createElement("div");
-        whDiv.classList = "flex gap-2";
+        whDiv.classList = "flex justify-between w-72";
 
         // Weight
         const weight = document.createElement("p");
-        weight.classList = "text-xl";
-        weight.textContent = `Weight: ${data.weight / 10}kg | `;
+        weight.classList = "text-xl font-bold";
+        weight.textContent = `Weight: ${data.weight / 10}kg`;
 
         // Height
         const height = document.createElement("p");
-        height.classList = "text-xl";
+        height.classList = "text-xl font-bold";
         height.textContent = `Height: ${data.height / 10}m`;
 
         // Ability Container
@@ -135,7 +136,7 @@ export function createFavoriteCard(favorites) {
 
         // Ability Header
         const abH2 = document.createElement("h2");
-        abH2.classList = "text-xl font-bold";
+        abH2.classList = "text-2xl font-bold";
         abH2.textContent = "Abilities";
 
         // Ability 1
@@ -154,7 +155,7 @@ export function createFavoriteCard(favorites) {
 
         // Stat Header
         const statH2 = document.createElement("h2");
-        statH2.classList = "text-xl font-bold";
+        statH2.classList = "text-2xl font-bold";
         statH2.textContent = "Stats";
 
         // Main Stat Container
@@ -169,32 +170,32 @@ export function createFavoriteCard(favorites) {
 
         // Stat 1
         const stat1 = document.createElement("p");
-        stat1.classList = "text-md capitalize";
+        stat1.classList = "text-lg capitalize";
         stat1.textContent = `${data.stat1Name}: ${data.stat1Value}`;
 
         // Stat 2
         const stat2 = document.createElement("p");
-        stat2.classList = "text-md capitalize";
+        stat2.classList = "text-lg capitalize";
         stat2.textContent = `${data.stat2Name}: ${data.stat2Value}`;
 
         // Stat 3
         const stat3 = document.createElement("p");
-        stat3.classList = "text-md capitalize";
+        stat3.classList = "text-lg capitalize";
         stat3.textContent = `${data.stat3Name}: ${data.stat3Value}`;
 
         // Stat 4
         const stat4 = document.createElement("p");
-        stat4.classList = "text-md capitalize";
+        stat4.classList = "text-lg capitalize";
         stat4.textContent = `${data.stat4Name}: ${data.stat4Value}`;
 
         // Stat 5
         const stat5 = document.createElement("p");
-        stat5.classList = "text-md capitalize";
+        stat5.classList = "text-lg capitalize";
         stat5.textContent = `${data.stat5Name}: ${data.stat5Value}`;
 
         // Stat 6
         const stat6 = document.createElement("p");
-        stat6.classList = "text-md capitalize";
+        stat6.classList = "text-lg capitalize";
         stat6.textContent = `${data.stat6Name}: ${data.stat6Value}`;
 
         // Right Card - Right Side
