@@ -51,7 +51,9 @@ export async function search(value, dataArray) {
   else {
     userSearch = userSearch.toLowerCase();
 
-    const matchingPokemon = await matchByName(userSearch, dataArray);
+    const matchingPokemon = dataArray.filter((pokemon) =>
+      pokemon.name.includes(userSearch)
+    );
     console.log(matchingPokemon);
     if (matchingPokemon.length === 0) {
       error.innerHTML = "No matching Pokémon found!";
@@ -72,9 +74,9 @@ export async function matchByID(poke_no, data) {
 }
 
 // Search Pokémon and match by name; used for search!
-function matchByName(query, data) {
-  return data.find((pokemon) => pokemon.name.includes(query));
-}
+// function matchByName(query, data) {
+//   return data.results.filter((pokemon) => pokemon.name.includes(query));
+// }
 
 // Fetch and display unique Pokémon cards; used for search!
 async function displayMatchingPokemonCards(pokemonList, uniquePokemon) {
