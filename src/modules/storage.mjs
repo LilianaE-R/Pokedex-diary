@@ -1,5 +1,5 @@
 // Local Storage Functions
-import { createLocalCard, removeStorageBtn, createStorageBtn, createFavoriteCard } from "./ui.mjs";
+import { removeStorageBtn, createStorageBtn, createFavoriteCard } from "./ui.mjs";
 
 //FAVOURITES to LS
 export function storeFavourites(data) {
@@ -76,8 +76,7 @@ export function checkStorage(id) {
 export function pullFavourites() {
     const favouritesStorage = localStorage.getItem("Favourites");
     const favourites = JSON.parse(favouritesStorage);
-    createLocalCard(favourites);
-    // createFavoriteCard(favourites);
+    createFavoriteCard(favourites);
 }
 
 // NOTES adding
@@ -85,7 +84,7 @@ export function addNotesToStorage(note, pokeID) {
     const favouritesLS = JSON.parse(localStorage.getItem("Favourites")) || [];
     for (let i = 0; i < favouritesLS.length; i++) {
         if (favouritesLS[i].id == pokeID) {
-            favouritesLS[i].note = note;
+            favouritesLS[i].note = typeof note === "object" ? "" : note;
             localStorage.setItem("Favourites", JSON.stringify(favouritesLS));
         }
     }

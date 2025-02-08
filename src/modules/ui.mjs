@@ -60,126 +60,6 @@ export function createCard(data) {
     checkStorage(data.id) ? createStorageBtn(data, card, "Remove") : createStorageBtn(data, card, "Add to Favorites");
 }
 
-// Card for Journal HERREEE
-export function createLocalCard(favorites) {
-    // element-pointer for container and style
-    const listContainer = document.getElementById("content-container");
-
-    // Loop for items
-    favorites.forEach((data) => {
-        // element-creator
-        let card = document.createElement("li");
-        let noteField = document.createElement("textarea");
-        let saveNoteBtn = document.createElement("button");
-        let mainCard = document.createElement("div");
-        let subCard = document.createElement("div");
-        let subCard1 = document.createElement("div");
-        let subCard2 = document.createElement("div");
-        let subCard3 = document.createElement("div");
-        let subCardH2 = document.createElement("h2");
-        let editNoteBtn = document.createElement("button");
-        let deleteNoteBtn = document.createElement("button");
-
-        // style AND data adding
-        subCard.className = "bg-white rounded-md flex gap-6 p-2";
-        subCardH2.textContent = "Type below your note:";
-        subCard2.className = "flex flex-col";
-        subCard1.innerHTML = `<div>
-                            <div class="flex gap-2 mb-2">
-                                <p>Height: ${data.height}</p>
-                                <p>|</p>
-                                <p>Weight: ${data.weight}</p>
-                            </div>
-                            <div class="mb-2">
-                                <h2 class="text-md">Abilities:</h2>
-                                <p class="text-sm capitalize">${data.ability1}</p>
-                                <p class="text-sm capitalize">${data.ability2}</p>
-                            </div>
-                            <div class="flex flex-col gap-1 mb-2">
-                            <h2 class="text-md">Stats:</h2>
-                            <div class="flex gap-6">
-                                <div>
-                                    <p class="text-sm capitalize">${data.stat1Name}: ${data.stat1Value}</p>
-                                    <p class="text-sm capitalize">${data.stat2Name}: ${data.stat2Value}</p>
-                                    <p class="text-sm capitalize">${data.stat3Name}: ${data.stat3Value}</p>
-                                    </div>
-                                   
-
-                                    <div>
-                                     <p class="text-sm capitalize">${data.stat4Name}: ${data.stat4Value}</p>
-                                    <p class="text-sm capitalize">${data.stat5Name}: ${data.stat5Value}</p>
-                                    <p class="text-sm capitalize">${data.stat6Name}: ${data.stat6Value}</p>
-                                    </div>
-
-                                    </div>
-                            </div>`;
-        noteField.id = "note-input";
-        noteField.textContent = `${data.note}`;
-        noteField.placeholder = `Note for ${data.name}`;
-        noteField.className = "border-gray-900 border mt-2 normal-case";
-        saveNoteBtn.id = "add-notes-localstorage";
-        saveNoteBtn.textContent = "Save Note";
-        saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
-        subCard3.className = "flex justify-between";
-
-        //function for save button + storage
-        saveNoteBtn.addEventListener("click", () => {
-            const notes = noteField.value.trim();
-            if (notes == "") {
-                noteField.focus();
-                noteField.required = true;
-                alert("You cannot submit an empty note");
-            } else {
-                addNotesToStorage(notes, data.id);
-                saveNoteBtn.textContent = "Your note is saved!";
-                saveNoteBtn.className = "bg-green-600 text-white mt-2 ";
-            }
-        });
-
-        //function for edit button + storage
-        editNoteBtn.textContent = "Edit";
-        editNoteBtn.className = "text-orange-500 ml-2 pl-2";
-        editNoteBtn.addEventListener("click", () => {
-            const newNote = prompt("Edit your Note", noteField.value);
-            if (newNote !== null) {
-                noteField.value = newNote.trim();
-                addNotesToStorage(newNote, data.id);
-                saveNoteBtn.textContent = "Save Note";
-                saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
-            } else {
-                alert(console.error());
-            }
-        });
-
-        //function for delete button + storage
-        deleteNoteBtn.textContent = "Delete";
-        deleteNoteBtn.className = "text-red-500 ml-2 right-0 pr-4";
-        deleteNoteBtn.addEventListener("click", () => {
-            noteField.value = "";
-            addNotesToStorage(noteField, data.id);
-        });
-
-        mainCard.className = "flex gap-3 mb-2";
-
-        card.classList.add("bg-white", "list-none", "my-2", "p-2", "flex", "flex-col", "rounded-md", "border", "shadow-md");
-        card.innerHTML = `
-  <img class='h-36 w-36 mx-auto ' src='${data.pic}'/>
-  <div class="flex gap-2">
-  <p class='capitalize'>#${data.id}</p>
-  <p class='capitalize'>${data.name}</p>
-  </div><p class='capitalize'>${data.type}</p><p class='capitalize'>${data.type2}</p>`;
-
-        // element-adding
-        subCard.append(subCard1, subCard2);
-        subCard2.append(subCardH2, noteField, saveNoteBtn, subCard3);
-        subCard3.append(editNoteBtn, deleteNoteBtn);
-        mainCard.appendChild(card);
-        mainCard.appendChild(subCard);
-
-        listContainer.appendChild(mainCard);
-    });
-}
-
 export function createFavoriteCard(favorites) {
     // Container
     const listContainer = document.getElementById("content-container");
@@ -230,7 +110,7 @@ export function createFavoriteCard(favorites) {
 
         // Right Card
         const rightCard = document.createElement("div");
-        rightCard.classList = "bg-white list-none p-3 flex flex-col rounded-md border shadow-md";
+        rightCard.classList = "bg-white list-none p-3 flex gap-2 rounded-md border shadow-md";
 
         // Right Card - Left Side
         const rightCardLeft = document.createElement("div");
@@ -251,10 +131,132 @@ export function createFavoriteCard(favorites) {
 
         // Ability Container
         const abDiv = document.createElement("div");
-        abDiv.classList = "flex gap-2";
+        abDiv.classList = "flex flex-col mt-2";
+
+        // Ability Header
+        const abH2 = document.createElement("h2");
+        abH2.classList = "text-xl font-bold";
+        abH2.textContent = "Abilities";
+
+        // Ability 1
+        const ab1 = document.createElement("p");
+        ab1.classList = "text-md";
+        ab1.textContent = data.ability1;
+
+        // Ability 2
+        const ab2 = document.createElement("p");
+        ab2.classList = "text-md";
+        ab2.textContent = data.ability2;
+
+        // Stats Container
+        const statDiv = document.createElement("div");
+        statDiv.classList = "flex flex-col mt-2";
+
+        // Ability Header
+        const statH2 = document.createElement("h2");
+        statH2.classList = "text-xl font-bold";
+        statH2.textContent = "Stats";
+
+        // Main Stat Container
+        const mainStatDiv = document.createElement("div");
+        mainStatDiv.classList = "flex gap-6";
+
+        // Stat Left
+        const statLeftDiv = document.createElement("div");
+
+        // Stat Right
+        const statRightDiv = document.createElement("div");
+
+        // Stat 1
+        const stat1 = document.createElement("p");
+        stat1.classList = "text-sm capitalize";
+        stat1.textContent = `${data.stat1Name}: ${data.stat1Value}`;
+
+        // Stat 2
+        const stat2 = document.createElement("p");
+        stat2.classList = "text-sm capitalize";
+        stat2.textContent = `${data.stat2Name}: ${data.stat2Value}`;
+
+        // Stat 3
+        const stat3 = document.createElement("p");
+        stat3.classList = "text-sm capitalize";
+        stat3.textContent = `${data.stat3Name}: ${data.stat3Value}`;
+
+        // Stat 4
+        const stat4 = document.createElement("p");
+        stat4.classList = "text-sm capitalize";
+        stat4.textContent = `${data.stat4Name}: ${data.stat4Value}`;
+
+        // Stat 5
+        const stat5 = document.createElement("p");
+        stat5.classList = "text-sm capitalize";
+        stat5.textContent = `${data.stat5Name}: ${data.stat5Value}`;
+
+        // Stat 6
+        const stat6 = document.createElement("p");
+        stat6.classList = "text-sm capitalize";
+        stat6.textContent = `${data.stat6Name}: ${data.stat6Value}`;
 
         // Right Card - Right Side
         const rightCardRight = document.createElement("div");
+        rightCardRight.classList = "flex flex-col";
+
+        // Note Header
+        const noteH2 = document.createElement("h2");
+        noteH2.classList = "text-xl font-bold";
+        noteH2.textContent = "Your Notes";
+
+        // Note Field
+        const noteField = document.createElement("textarea");
+        noteField.className = "border-gray-900 border mt-2 normal-case";
+        noteField.textContent = `${data.note === undefined ? "" : data.note}`;
+        noteField.placeholder = `Note for ${data.name}`;
+
+        // Save Button
+        const saveNoteBtn = document.createElement("button");
+        saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
+        saveNoteBtn.textContent = "Save Note";
+        saveNoteBtn.addEventListener("click", () => {
+            const notes = noteField.value.trim();
+            if (notes == "") {
+                noteField.focus();
+                noteField.required = true;
+                alert("You cannot submit an empty note");
+            } else {
+                addNotesToStorage(notes, data.id);
+                saveNoteBtn.textContent = "Your note is saved!";
+                saveNoteBtn.className = "bg-green-600 text-white mt-2 ";
+            }
+        });
+
+        // Edit/Delete Container
+        const btnContainer = document.createElement("div");
+        btnContainer.className = "flex justify-between";
+
+        // Edit Button
+        const editNoteBtn = document.createElement("button");
+        editNoteBtn.textContent = "Edit";
+        editNoteBtn.className = "text-orange-500 ml-2 pl-2";
+        editNoteBtn.addEventListener("click", () => {
+            const newNote = prompt("Edit your Note", noteField.value);
+            if (newNote !== null) {
+                noteField.value = newNote.trim();
+                addNotesToStorage(newNote, data.id);
+                saveNoteBtn.textContent = "Save Note";
+                saveNoteBtn.className = "bg-blue-300 text-white mt-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
+            } else {
+                alert(console.error());
+            }
+        });
+
+        // Delete Button
+        const deleteNoteBtn = document.createElement("button");
+        deleteNoteBtn.textContent = "Delete";
+        deleteNoteBtn.className = "text-red-500 ml-2 right-0 pr-4";
+        deleteNoteBtn.addEventListener("click", () => {
+            noteField.value = "";
+            addNotesToStorage(noteField, data.id);
+        });
 
         // Append
         listContainer.appendChild(card);
@@ -266,8 +268,20 @@ export function createFavoriteCard(favorites) {
         div2.append(type1, type2);
 
         // Right Card
-        rightCard.append(whDiv);
+        rightCard.append(rightCardLeft, rightCardRight);
+
+        // Right Card - Left Side
+        rightCardLeft.append(whDiv, abDiv, statDiv, mainStatDiv);
         whDiv.append(weight, height);
+        abDiv.append(abH2, ab1, ab2);
+        statDiv.append(statH2);
+        mainStatDiv.append(statLeftDiv, statRightDiv);
+        statLeftDiv.append(stat1, stat2, stat3);
+        statRightDiv.append(stat4, stat5, stat6);
+
+        // Right Card - Right Side
+        rightCardRight.append(noteH2, noteField, saveNoteBtn, btnContainer);
+        btnContainer.append(editNoteBtn, deleteNoteBtn);
     });
 }
 
