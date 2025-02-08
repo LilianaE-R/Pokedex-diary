@@ -9,7 +9,8 @@ export function storeFavourites(data) {
     const pokemonListLocal = {
         id: data.id,
         name: data.name,
-        type: data.types[0].type.name,
+        type: getPokemonType(data, 0),
+        type2: getPokemonType(data, 1),
         note: "",
         pic: data.sprites.front_default,
         height: data.height,
@@ -33,6 +34,15 @@ export function storeFavourites(data) {
     localStorage.setItem("Favourites", JSON.stringify([...previousData, pokemonListLocal]));
     const parentElement = removeStorageBtn(data.id);
     createStorageBtn(data, parentElement, "Remove");
+}
+
+//
+export function getPokemonType(data, num) {
+    if (num === 1 && data.types.length > 1) {
+        return data.types[1].type.name;
+    } else {
+        return data.types[0].type.name;
+    }
 }
 
 // Remove stored Pokemon
