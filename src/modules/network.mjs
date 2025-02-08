@@ -3,65 +3,67 @@ import { createCard } from "./ui.mjs";
 
 const mainSRC = "https://pokeapi.co/api/v2/pokemon";
 const error = document.getElementById("errorbar");
-const searchBar = document.getElementById("searchbar");
 const listContainer = document.getElementById("content-container");
 const uniquePokemon = new Set();
 
-export function search(value, dataArray) {
-  // Keyup event for real-time search -> only searches when key is lifted
-  searchBar.addEventListener("keyup", async () => {
-    const userSearch = value.trim().toLowerCase();
+export async function search(value, dataArray) {
+  //  real-time search -> only searches when key is lifted
+  let userSearch = value.trim();
+  uniquePokemon.clear();
+  listContainer.innerHTML = ""; // Clear previous results
 
-    // If input is empty, reload all Pokémon
-    if (userSearch === "") {
-      error.innerHTML = "";
-      listContainer.innerHTML = "";
-      uniquePokemon.clear();
-      pokemonFetch();
+  // If input is empty, reload all Pokémon
+  if (userSearch === "") {
+    error.innerHTML = "";
+    listContainer.innerHTML = "";
+    uniquePokemon.clear();
+    pokemonFetch();
+    return;
+  }
+
+  // ID Search
+  if (!isNaN(userSearch)) {
+    const poke_no = parseInt(userSearch, 10);
+    if (!uniquePokemon.has(poke_no)) {
+      uniquePokemon.add(poke_no);
+      matchByID(poke_no, dataArray);
       return;
     }
+  }
 
-    listContainer.innerHTML = ""; // Clear previous results
-    uniquePokemon.clear();
+  // Multiple IDs -> Multiple IDs passed to fetchDataFromSearchID
+  else if (userSearch.split(",").every((i) => !isNaN(Number(i.trim())))) {
+    const poke_no_list = userSearch
+      .split(",")
+      .map((i) => Number(i.trim()))
+      .filter((num) => !isNaN(num));
 
-    // ID Search
-    if (!isNaN(userSearch)) {
-      const poke_no = parseInt(userSearch, 10);
+    poke_no_list.forEach((poke_no) => {
       if (!uniquePokemon.has(poke_no)) {
         uniquePokemon.add(poke_no);
-        fetchDataFromSearchID(poke_no, dataArray);
+        matchByID(poke_no, dataArray);
+        return;
       }
-    }
+    });
+  }
 
-    // Multiple IDs -> Multiple IDs passed to fetchDataFromSearchID
-    else if (userSearch.split(",").every((i) => !isNaN(Number(i.trim())))) {
-      const poke_no_list = userSearch
-        .split(",")
-        .map((i) => Number(i.trim()))
-        .filter((num) => !isNaN(num));
+  // Name Search -> "matchByName"
+  else {
+    userSearch = userSearch.toLowerCase();
 
-      poke_no_list.forEach((poke_no) => {
-        if (!uniquePokemon.has(poke_no)) {
-          uniquePokemon.add(poke_no);
-          fetchDataFromSearchID(poke_no, dataArray);
-        }
-      });
+    const matchingPokemon = await matchByName(userSearch, dataArray);
+    console.log(matchingPokemon);
+    if (matchingPokemon.length === 0) {
+      error.innerHTML = "No matching Pokémon found!";
+    } else {
+      error.innerHTML = "";
+      displayMatchingPokemonCards(matchingPokemon, uniquePokemon);
     }
-    // Name Search -> "fetchDataAndMatchByName"
-    else {
-      const matchingPokemon = await fetchDataAndMatchByName(userSearch);
-      if (matchingPokemon.length === 0) {
-        error.innerHTML = "No matching Pokémon found!";
-      } else {
-        error.innerHTML = "";
-        displayMatchingPokemonCards(matchingPokemon, uniquePokemon);
-      }
-    }
-  });
+  }
 }
 
-// Fetch Pokémon by ID; used for search!
-export async function fetchDataFromSearchID(poke_no, data) {
+// Search Pokémon and match by ID; used for search!
+export async function matchByID(poke_no, data) {
   data.find((pokemon) => {
     if (String(pokemon.id).includes(poke_no)) {
       createCard(pokemon);
@@ -69,46 +71,43 @@ export async function fetchDataFromSearchID(poke_no, data) {
   });
 }
 
-// Fetch Pokémon and match by name; used for search!
-async function fetchDataAndMatchByName(query) {
-  try {
-    const res = await fetch(`${mainSRC}?limit=1000`);
-    if (!res.ok) throw new Error("Failed to fetch Pokémon list");
-    const data = await res.json();
-
-    return data.results.filter((pokemon) => pokemon.name.includes(query));
-  } catch (e) {
-    console.error("Error fetching Pokémon names:", e);
-    return [];
-  }
+// Search Pokémon and match by name; used for search!
+function matchByName(query, data) {
+  return data.find((pokemon) => pokemon.name.includes(query));
 }
 
 // Fetch and display unique Pokémon cards; used for search!
 async function displayMatchingPokemonCards(pokemonList, uniquePokemon) {
-  const listContainer = document.getElementById("content-container");
   listContainer.innerHTML = ""; // Clear previous results
+  if (pokemonList.length > 1) {
+    for (const pokemon of pokemonList) {
+      if (uniquePokemon.has(pokemon.id)) {
+        createCard(pokemon);
+      } else {
+        // Prevent duplicates
+        uniquePokemon.add(pokemon.id);
+        createCard(pokemon);
+      }
+    }
 
-  for (const pokemon of pokemonList) {
-    if (uniquePokemon.has(pokemon.name)) continue; // Prevent duplicates
-    uniquePokemon.add(pokemon.name);
-
-    try {
-      const res = await fetch(`${mainSRC}/${pokemon.name}`);
-      if (!res.ok) throw new Error("Failed to fetch Pokémon data");
-      const data = await res.json();
-      createCard(data);
-    } catch (e) {
-      console.error(`Error fetching Pokémon: ${pokemon.name}`, e);
+    if (pokemonList.length === 1) {
+      if (uniquePokemon.has(pokemonList.id)) {
+        createCard(pokemonList);
+      } else {
+        // Prevent duplicates
+        uniquePokemon.add(pokemonList.id);
+        createCard(pokemonList);
+      }
     }
   }
 }
 
-// Card creation function
+// Main Card creation function
 export function pokemonFetch(dataArray) {
   dataArray.forEach((pokemon) => createCard(pokemon));
 }
 
-// Pokemon fetch; length sets the number of pokemon
+// Pokemon fetch; length sets the number of pokemon; data used everywhere!
 export async function fetchDataComplete() {
   try {
     const length = 150;

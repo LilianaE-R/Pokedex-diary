@@ -10,7 +10,7 @@ async function main() {
   const searchBar = document.getElementById("searchbar");
   const dataArray = await fetchDataComplete();
   pokemonFetch(dataArray);
-  searchBar.addEventListener("input", (e) => search(e.target.value, dataArray));
+  searchBar.addEventListener("keyup", (e) => search(e.target.value, dataArray));
 }
 
 main();
