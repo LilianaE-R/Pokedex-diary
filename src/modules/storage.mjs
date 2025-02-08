@@ -1,21 +1,23 @@
 // Local Storage Functions
-import { createLocalCard, removeStorageBtn, createStorageBtn } from "./ui.mjs";
+import { removeStorageBtn, createStorageBtn, createFavoriteCard } from "./ui.mjs";
 
 //FAVOURITES to LS
 export function storeFavourites(data) {
     // Get previous data OR an empty array
     const previousData = JSON.parse(localStorage.getItem("Favourites")) || [];
+
     //variable with pokemon data
     const pokemonListLocal = {
         id: data.id,
         name: data.name,
-        type: data.types[0].type.name,
+        type1: getPokemonType(data, 0),
+        type2: getPokemonType(data, 1),
         note: "",
-        pic: data.sprites.front_default,
+        pic: data.sprites.other["official-artwork"].front_default,
         height: data.height,
         weight: data.weight,
         ability1: data.abilities[0].ability.name,
-        ability2: data.abilities[1].ability.name,
+        ability2: data.abilities.length > 1 ? data.abilities[1].ability.name : "",
         stat1Name: data.stats[0].stat.name,
         stat1Value: data.stats[0].base_stat,
         stat2Name: data.stats[1].stat.name,
@@ -29,10 +31,20 @@ export function storeFavourites(data) {
         stat6Name: data.stats[5].stat.name,
         stat6Value: data.stats[5].base_stat,
     };
+
     // Set item to a stringified version of an array with the old and new tasks
     localStorage.setItem("Favourites", JSON.stringify([...previousData, pokemonListLocal]));
     const parentElement = removeStorageBtn(data.id);
     createStorageBtn(data, parentElement, "Remove");
+}
+
+//
+export function getPokemonType(data, num) {
+    if (num === 1 && data.types.length > 1) {
+        return data.types[1].type.name;
+    } else {
+        return data.types[0].type.name;
+    }
 }
 
 // Remove stored Pokemon
@@ -64,24 +76,15 @@ export function checkStorage(id) {
 export function pullFavourites() {
     const favouritesStorage = localStorage.getItem("Favourites");
     const favourites = JSON.parse(favouritesStorage);
-    createLocalCard(favourites);
+    createFavoriteCard(favourites);
 }
 
 // NOTES adding
-export function addToNotes(note, pokeID) {
-    const notes = note.value.trim();
-
-    if (notes) {
-        note.focus();
-    } else {
-        console.error("You cannot submit an empty note");
-    }
-
+export function addNotesToStorage(note, pokeID) {
     const favouritesLS = JSON.parse(localStorage.getItem("Favourites")) || [];
     for (let i = 0; i < favouritesLS.length; i++) {
-        console.log(favouritesLS[i]);
         if (favouritesLS[i].id == pokeID) {
-            favouritesLS[i].note = notes;
+            favouritesLS[i].note = typeof note === "object" ? "" : note;
             localStorage.setItem("Favourites", JSON.stringify(favouritesLS));
         }
     }
