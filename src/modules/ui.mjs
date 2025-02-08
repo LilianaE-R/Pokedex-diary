@@ -6,7 +6,7 @@ export function createCard(data) {
     const listContainer = document.getElementById("content-container");
 
     // Card
-    const card = document.createElement("li");
+    const card = document.createElement("div");
     card.classList = "bg-white list-none my-2 p-2 flex flex-col rounded-md border shadow-md";
 
     // Img
@@ -68,14 +68,14 @@ export function createLocalCard(favorites) {
     // Loop for items
     favorites.forEach((data) => {
         // element-creator
-        let card = document.createElement("li");
-        let noteField = document.createElement("textarea");
-        let saveNoteBtn = document.createElement("button");
-        let mainCard = document.createElement("div");
-        let subCard = document.createElement("div");
-        let subCard1 = document.createElement("div");
-        let subCard2 = document.createElement("div");
-        let subCardH2 = document.createElement("h2");
+        const card = document.createElement("li");
+        const noteField = document.createElement("textarea");
+        const saveNoteBtn = document.createElement("button");
+        const mainCard = document.createElement("div");
+        const subCard = document.createElement("div");
+        const subCard1 = document.createElement("div");
+        const subCard2 = document.createElement("div");
+        const subCardH2 = document.createElement("h2");
 
         // style AND data adding
         subCard.className = "bg-white rounded-md flex gap-6 p-2";
@@ -141,15 +141,105 @@ export function createLocalCard(favorites) {
     });
 }
 
+export function createFavoriteCard(favorites) {
+    // Container
+    const listContainer = document.getElementById("content-container");
+
+    favorites.forEach((data) => {
+        // Card Container
+        const card = document.createElement("div");
+        card.classList = "flex gap-4 mb-4";
+
+        // Left Card
+        const leftCard = document.createElement("div");
+        leftCard.classList = "bg-white list-none p-2 flex flex-col rounded-md border shadow-md";
+
+        // Img
+        const img = document.createElement("img");
+        img.classList = "h-32 w-32 mx-auto my-2";
+        img.src = data.pic;
+
+        // ID/Name Container
+        const div1 = document.createElement("div");
+        div1.classList = "flex gap-2";
+
+        // ID
+        const id = document.createElement("p");
+        id.classList = "capitalize font-bold text-xl";
+        id.textContent = `#${data.id}`;
+
+        // Pokemon Name
+        const pokemonName = document.createElement("p");
+        pokemonName.classList = "capitalize text-xl";
+        pokemonName.textContent = data.name;
+
+        // Type Container
+        const div2 = document.createElement("div");
+        div2.classList = "flex gap-3 mx-auto";
+
+        // Type 1
+        const type1 = document.createElement("p");
+        type1.classList = "capitalize bg-neutral-300 py-1 px-2 rounded-md";
+        type1.style.background = getTypeColor(data.type1);
+        type1.textContent = data.type1;
+
+        // Type 2
+        const type2 = document.createElement("p");
+        type2.classList = "capitalize bg-neutral-300 py-1 px-2 rounded-md";
+        type2.style.background = getTypeColor(data.type2);
+        type2.textContent = data.type2;
+
+        // Right Card
+        const rightCard = document.createElement("div");
+        rightCard.classList = "bg-white list-none p-3 flex flex-col rounded-md border shadow-md";
+
+        // Right Card - Left Side
+        const rightCardLeft = document.createElement("div");
+
+        // Weight/Height Container
+        const whDiv = document.createElement("div");
+        whDiv.classList = "flex gap-2";
+
+        // Weight
+        const weight = document.createElement("p");
+        weight.classList = "text-xl";
+        weight.textContent = `Weight: ${data.weight / 10} kg | `;
+
+        // Height
+        const height = document.createElement("p");
+        height.classList = "text-xl";
+        height.textContent = `Height: ${data.height / 10} m`;
+
+        // Ability Container
+        const abDiv = document.createElement("div");
+        abDiv.classList = "flex gap-2";
+
+        // Right Card - Right Side
+        const rightCardRight = document.createElement("div");
+
+        // Append
+        listContainer.appendChild(card);
+        card.append(leftCard, rightCard);
+
+        // Left Card
+        leftCard.append(div1, img, div2);
+        div1.append(id, pokemonName);
+        div2.append(type1, type2);
+
+        // Right Card
+        rightCard.append(whDiv);
+        whDiv.append(weight, height);
+    });
+}
+
 // Create Save/Remove Button
 export function createStorageBtn(data, parentElement, content) {
-    // Create Button
     const btn = document.createElement("button");
     btn.id = data.id;
     btn.textContent = content;
     btn.className = "p-1 rounded-lg outline-1 text-white text-md transition delay-100 duration-100 ease-in-out hover:scale-105";
 
-    // Save/Remove specific additions
+    // Save/Remove specific configs
     if (content === "Remove") {
         btn.classList.add("bg-red-500", "hover:bg-rose-500");
         btn.addEventListener("click", () => removeFavorite(data));
@@ -158,7 +248,7 @@ export function createStorageBtn(data, parentElement, content) {
         btn.addEventListener("click", () => storeFavourites(data));
     }
 
-    // Prepend
+    // Append
     parentElement.append(btn);
 }
 
